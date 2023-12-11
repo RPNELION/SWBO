@@ -35,16 +35,28 @@
 <main>
     <div class="container">
         <div class="left-column">
+            {% if user.is_authenticated %}
             <div class="user">
                 <h3><i class="fas fa-info-circle"></i> Instrukcja Panelu Zadań:</h3>
                 <p>Witaj w panelu zadań!</p>
                 <p>W menu powyżej możesz wybrać jedną z opcji.</p>
-                <p>W zakładce "Dodaj Zadanie" możesz dodać nowe zadanie.</p>
-                <p>W zakładce "Usuń Zadanie" możesz usunąć zadanie.</p>
-                <p>W zakładce "Wyszukaj Dzień" pokaże się lista zadań z wybranego przez Ciebie dnia.</p>
+                <p>W zakładce "Dodaj zadania i projekty" możesz dodać nowe wydarzenia.</p>
+                <p>W zakładce "Usuń wydarzenie" możesz usunąć zadanie.</p>
+                <p>W zakładce "Zakończ zadanie lub projekt" możesz zakończyć swoje wydarzenia.</p>
                 <p>Aby powrócić do strony głównej, kliknij na "Strona główna" w menu.</p>
                 <p>Życzymy miłego korzystania z naszego systemu!</p>
             </div>
+            {% else %}
+            <div class="user">
+                <h3><i class="fas fa-info-circle"></i> Instrukcja Panelu Zadań:</h3>
+                <p>Witaj w panelu zadań!</p>
+                <p>Panel jest zablokowany dla zalogowanych użytkowników.</p>
+                <p>Aby się zalogować, kliknij na "Zaloguj się" na stronie głównej. </p>
+                <p>Jeśli nie posiadasz konta musisz się najpierw zarejestrować!</p>
+                <p>Aby powrócić do strony głównej, kliknij na "Strona główna" w menu.</p>
+                <p>Życzymy miłego korzystania z naszego systemu!</p>
+            </div>
+            {% endif %}
         </div>
         <div class="right-column">
             <div class="user">
