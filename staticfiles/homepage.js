@@ -197,6 +197,7 @@ function restoreBackground() {
     bodyElement.style.backgroundImage = "url('https://www.atepaa.com.pl/wp-content/uploads/2019/03/widok-z-gory-1024x724.jpg')";
     bodyElement.style.backgroundSize = "cover";
     bodyElement.style.backgroundRepeat = "no-repeat";
+    bodyElement.style.backgroundAttachment = "fixed";
     restoreBackgroundButton.style.display = 'none';
     clearBackgroundButton.style.display = '';
     saveBackgroundPreference('restore');
