@@ -5,9 +5,9 @@ body {
     padding: 0;
     background-image: url('https://www.atepaa.com.pl/wp-content/uploads/2019/03/widok-z-gory-1024x724.jpg');
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
     color: #ffffff;
-    background-attachment: fixed;
 }
 
 /* Nagłówek */
