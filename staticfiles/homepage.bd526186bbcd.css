@@ -1,0 +1,284 @@
+/* Resetowanie stylów i podstawowe style */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('https://www.atepaa.com.pl/wp-content/uploads/2019/03/widok-z-gory-1024x724.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffffff;
+    background-attachment: fixed;
+}
+
+/* Nagłówek */
+header {
+    background: linear-gradient(to right, #6b696c, #0b2534);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Przyciski */
+.buttons button {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    background: linear-gradient(to right, #d6e7ea, #2e81b0);
+}
+
+/* Menu */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-flex;
+    margin: 2px;
+    position: relative;
+    padding: 5px;
+    border: 3px solid black;
+    border-radius: 10px;
+    color: white;
+    background: linear-gradient(to right, #d6e7ea, #2e81b0);
+}
+
+/* Drugi poziom menu */
+nav ul ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background: linear-gradient(to right, #d6e7ea, #2e81b0);
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+a:hover {
+    background-color: aquamarine;
+    border-radius: 10px;
+}
+
+nav ul li:hover ul {
+    display: inline-flex;
+    flex-direction: column;
+    position: absolute;
+    margin-top: 0;
+    left: 50%;
+    transform: translateX(-65%);
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 100px;
+}
+
+.messages {
+    background: linear-gradient(to right, #11415e, #b2b0b0);
+    border: 1px solid black;
+    color: #f6eded; /* Ustawienie koloru tekstu na czarny */
+    padding: 5px; /* Dodanie wewnętrznego odstępu dla lepszego wyglądu */
+    border-radius: 10px; /* Dodanie zaokrąglonych rogów */
+    text-align: center;
+    margin: 10px;
+}
+
+/* Treść główna */
+main {
+    margin: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Styl kolumn */
+.container {
+    display: flex;
+}
+
+.left-column {
+    width: 50%;
+    padding: 10px;
+}
+
+.right-column {
+    width: 50%;
+    padding: 10px;
+}
+
+.user {
+    background: linear-gradient(to right, #11415e, #b2b0b0);
+    border: 1px solid black;
+    color: #f6eded; /* Ustawienie koloru tekstu na czarny */
+    padding: 5px; /* Dodanie wewnętrznego odstępu dla lepszego wyglądu */
+    border-radius: 10px; /* Dodanie zaokrąglonych rogów */
+    text-align: center;
+}
+
+.LandRSection {
+    display: none;
+    background: linear-gradient(to right, #11415e, #b2b0b0);
+    border: 1px solid black;
+    color: #f6eded; /* Ustawienie koloru tekstu na czarny */
+    padding: 5px; /* Dodanie wewnętrznego odstępu dla lepszego wyglądu */
+    border-radius: 10px; /* Dodanie zaokrąglonych rogów */
+    text-align: center;
+    flex-direction: column;
+}
+
+.form-group {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+    width: calc(30% - 20px);
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="datetime-local"] {
+    height: 10px;
+    padding: 5px;
+    margin-bottom: 10px; /* Dodaje odstęp między polami formularza */
+    border-radius: 10px;
+
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Styl dla select */
+select {
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+button[type="submit"], input[type="submit"] {
+    margin-top: 20px; /* Dodaje odstęp 30px nad przyciskiem */
+    border-radius: 10px;
+    background: linear-gradient(to right, #d6e7ea, #2e81b0);
+    text-align: center;
+}
+
+.gora-prawo {
+    text-align: right;
+    margin: 10px;
+}
+
+.profilowe {
+    text-align: center;
+}
+
+.obrazek {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.profilowe img {
+    border-radius: 100px;
+}
+
+.funkcje-profilu {
+    text-align: center;
+    padding: 10px;
+}
+
+.panel-caly {
+    padding: 10px; /* Dodanie wewnętrznego odstępu dla lepszego wyglądu */
+    border-radius: 10px; /* Dodanie zaokrąglonych rogów */
+    text-align: left;
+    display: flex;
+}
+
+/* Stopka */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to right, #a9a5a9, #0b2534);
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+}
+
+.odstep {
+    margin: 10px;
+    padding: 10px;
+}
+
+/*Rejestracja*/
+.rejestracja {
+    padding: 10px;
+    margin: 20px;
+}
+
+/* Styl listy zadań */
+.task-list {
+    border: 2px solid #bbe3e1;
+    background: linear-gradient(to right, #1b557a, #7a777a);
+    list-style-type: none;
+    padding: 0;
+    border-radius: 10px; /* Dodanie zaokrąglonych rogów */
+}
+
+.task {
+    border: 1px solid #9deade;
+    margin: 10px 0;
+    padding: 10px;
+    background: linear-gradient(to right, #7a777a, #0b2534);
+    color: #ffffff;
+    border-radius: 50px; /* Dodanie zaokrąglonych rogów */
+
+}
+
+/* Styl trybu ciemnego */ /* trzeba pozmieniać */
+
+header.dark-mode, footer.dark-mode, body.dark-mode .user, body.dark-mode .LandRSection {
+    background: linear-gradient(to right, #353636, #002b2d); /* Kolor tła dla task w trybie jasnym */
+    color: #c5ded7;
+}
+
+body.dark-mode .task-list {
+    background: linear-gradient(to right, #013d42, #3e4242);;
+    color: #c5ded7;
+}
+
+body.dark-mode .task, header.dark-mode .messages {
+    background: linear-gradient(to right, #171818, #002325); /* Kolor tła dla task w trybie jasnym */
+    color: #c5ded7;
+}
+
+/* Styl dla trybu jasnego */ /* trzeba pozmieniać */
+header.light-mode, footer.light-mode, body.light-mode .user, body.light-mode .LandRSection {
+    background: linear-gradient(to right, #b3b6b6, #32b9c4);
+    color: black;
+}
+
+body.light-mode .task-list {
+    background: linear-gradient(to right, #32b9c4, #b3b6b6);;
+    color: black; /* Kolor tekstu w trybie jasnym */
+}
+
+body.light-mode .task, header.light-mode .messages {
+    background: linear-gradient(to right, #9fa4a4, #39afbb); /* Kolor tła dla task w trybie jasnym */
+    color: black; /* Kolor tekstu w trybie jasnym */
+}
+
+/* Styl dla losowych zadań użytkownika */
+.user ul {
+    list-style-type: none; /* Usunięcie domyślnego punktu listy */
+    padding-left: 0; /* Usunięcie wcięcia z lewej strony */
+}
+
+.user ul li {
+    margin-bottom: 10px; /* Odstęp między zadaniami */
+}
+
+.user ul li:before {
+    content: ""; /* Usunięcie punktów */
+}
