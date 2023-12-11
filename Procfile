@@ -1,0 +1,1 @@
+web: gunicorn SWBO.wsgi --log-file
