@@ -24,8 +24,8 @@
     <div class="menu">
         <ul>
             <li><a href="{% url 'homepage' %}"><i class="fas fa-home"></i> Strona główna</a></li>
-            <li><a href="{% url 'zadanie' %}"><i class="fas fa-tasks"></i> Zadania</a>
-                 <ul>
+            <li><a href="{% url 'zadanie' %}"><i class="fas fa-tasks"></i> Panel wydarzeń</a>
+                <ul>
                     <li><a href="{% url 'zadania_dodaj' %}"><i class="fas fa-plus"></i>  Dodaj zadania i projekty</a></li>
                     <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
                     {% if user.is_authenticated %}
@@ -34,7 +34,7 @@
                     {% endif %}
                 </ul>
             </li>
-            <li><a href="{% url 'baza' %}"><i class="far fa-calendar-alt"></i> Baza Wydarzeń</a></li>
+            <li><a href="{% url 'baza' %}"><i class="far fa-calendar-alt"></i> Baza wydarzeń</a></li>
         </ul>
     </div>
 </nav>
