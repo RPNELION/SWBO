@@ -33,8 +33,8 @@
 <nav>
     <ul>
         <li><a href="{% url 'homepage' %}"><i class="fas fa-home"></i> Cofnij do strony głównej</a></li>
-        <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
         {% if user.is_authenticated %}
+            <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
             <li><a href="{% url 'zadania_wyszukaj' %}"><i class="fas fa-check-square"></i> Zakończ zadanie lub
                 projekt</a>
             </li>

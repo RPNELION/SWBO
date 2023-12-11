@@ -36,9 +36,9 @@
             <li><a href="{% url 'homepage' %}"><i class="fas fa-home"></i> Strona główna</a></li>
             <li><a href="{% url 'zadanie' %}"><i class="fas fa-tasks"></i> Panel wydarzeń</a>
                 <ul>
+                    {% if user.is_authenticated %}
                     <li><a href="{% url 'zadania_dodaj' %}"><i class="fas fa-plus"></i>  Dodaj zadania i projekty</a></li>
                     <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
-                    {% if user.is_authenticated %}
                     <li><a href="{% url 'zadania_wyszukaj' %}"><i class="fas fa-check-square"></i> Zakończ zadanie lub projekt</a>
                     </li>
                     {% endif %}

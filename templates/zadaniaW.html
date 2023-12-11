@@ -34,8 +34,10 @@
 <nav>
     <ul>
         <li><a href="{% url 'homepage' %}"><i class="fas fa-home"></i> Cofnij do strony głównej</a></li>
+        {% if user.is_authenticated %}
         <li><a href="{% url 'zadania_dodaj' %}"><i class="fas fa-plus"></i> Dodaj zadania i projekty</a></li>
         <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
+        {% endif %}
     </ul>
 </nav>
 <main>
