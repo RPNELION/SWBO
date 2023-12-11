@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>System Zarządzania Zadaniami</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header>
+    <h1>System Zarządzania Zadaniami</h1>
+    <div class="buttons">
+        <button class="dark-mode" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Dark Mode</button>
+        <button class="light-mode" onclick="toggleLightMode()"><i class="fas fa-sun"></i> Light Mode</button>
+        <button class="background-zero" onclick="clearBackground()"><i class="fas fa-eye-slash"></i> Wyłącz tło</button>
+        <button class="restore-background" onclick="restoreBackground()" style="display: none;"><i
+                class="fas fa-eye"></i> Przywróć tło
+        </button>
+    </div>
+    {% for message in messages %}
+        <div class="messages">
+            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>Powiadomienie: </strong> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</header>
+<nav>
+    <div class="menu">
+        <ul>
+            <li><a href="{% url 'homepage' %}"><i class="fas fa-home"></i> Strona główna</a></li>
+            <li><a href="{% url 'zadanie' %}"><i class="fas fa-tasks"></i> Panel wydarzeń</a>
+                <ul>
+                    <li><a href="{% url 'zadania_dodaj' %}"><i class="fas fa-plus"></i> Dodaj zadania i projekty</a>
+                    </li>
+                    <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'zadania_wyszukaj' %}"><i class="fas fa-check-square"></i> Zakończ zadanie lub projekt</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </li>
+            <li><a href="{% url 'baza' %}"><i class="far fa-calendar-alt"></i> Baza Wydarzeń</a></li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <section class="user">
+        <h2>Wszystkie Wydarzenia</h2>
+        <div class="container">
+            <div class="right-column">
+                <label for="priority-filter">
+                    <i class="fas fa-filter"></i> Filtruj po priorytecie:
+                </label>
+                <select id="priority-filter">
+                    <option value="">Wszystkie priorytety</option>
+                    <option value="1">Bardzo Wysoki</option>
+                    <option value="2">Wysoki</option>
+                    <option value="3">Średni</option>
+                    <option value="4">Niski</option>
+                    <option value="5">Bardzo Niski</option>
+                </select>
+            </div>
+            <div class="left-column">
+                <label for="status-filter">
+                    <i class="fas fa-filter"></i> Filtruj po statusie:
+                </label>
+                <select id="status-filter">
+                    <option value="all">Wszystkie</option>
+                    <option value="completed">Zakończone</option>
+                    <option value="in-progress">W trakcie</option>
+                </select>
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+            {% if events %}
+                <div class="task-list">
+                    <ul>
+                        {% for event in events %}
+                            <li class="task"
+                                data-priority="{{ event.priority }}"
+                                data-completed="{{ event.completed }}">
+                                {{ event.title }} -
+                                Priorytet: {{ event.priority }},
+                                Status: {{ event.completed|yesno:"Zakończone,W trakcie" }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <p>Brak wydarzeń do wyświetlenia.</p>
+            {% endif %}
+        {% else %}
+            <p>Aby zobaczyć wydarzenia, proszę zaloguj się.</p>
+        {% endif %}
+    </section>
+</main>
+</body>
+<footer>
+    <p>© 2023 System Zarządzania Zadaniami</p>
+</footer>
+</html>

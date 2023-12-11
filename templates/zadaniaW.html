@@ -1,0 +1,95 @@
+<!-- w pliku zadaniaW.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>System Zarządzania Zadaniami</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header>
+    <h1>System Zarządzania Zadaniami</h1>
+    <div class="buttons">
+        <button class="dark-mode" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Dark Mode</button>
+        <button class="light-mode" onclick="toggleLightMode()"><i class="fas fa-sun"></i> Light Mode</button>
+        <button class="background-zero" onclick="clearBackground()"><i class="fas fa-eye-slash"></i> Wyłącz tło</button>
+        <button class="restore-background" onclick="restoreBackground()" style="display: none;"><i
+                class="fas fa-eye"></i> Przywróć tło
+        </button>
+    </div>
+    {% for message in messages %}
+        <div class="messages">
+            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>Powiadomienie: </strong> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</header>
+<nav>
+    <ul>
+        <li><a href="{% url 'homepage' %}"><i class="fas fa-home"></i> Cofnij do strony głównej</a></li>
+        <li><a href="{% url 'zadania_dodaj' %}"><i class="fas fa-plus"></i> Dodaj zadania i projekty</a></li>
+        <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
+    </ul>
+</nav>
+<main>
+    <section>
+        <div class="container">
+            <div class="left-column">
+                <section class="user">
+                    <h2>Zakończ zadanie lub projekt</h2>
+                    {% if user.is_authenticated %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_zadanie_do_zakonczenia">Wybierz wydarzenie do zakończenia:</label>
+                                <select id="id_zadanie_do_zakonczenia" name="element_do_zakonczenia">
+                                    {% for item in not_completed_items %}
+                                        <option value="{{ item.id }}">{{ item.title }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="id_haslo_uzytkownika">Hasło użytkownika:</label>
+                                <input type="password" id="id_haslo_uzytkownika" name="haslo_uzytkownika">
+                                <input type="submit" value="Zakończ wydarzenie">
+                            </div>
+                        </form>
+                    {% else %}
+                        <p>Aby zobaczyć wydarzenia, proszę zaloguj się na stronie głównej.</p>
+                    {% endif %}
+                </section>
+            </div>
+            <div class="right-column">
+                <section class="user">
+                    <h2>Ukończone wydarzenia</h2>
+                    {% if user.is_authenticated %}
+                        {% if completed_items %}
+                            <div class="completed-items task-list">
+                                <ul>
+                                    {% for item in completed_items %}
+                                        <li class="task">{{ item.title }} miał priorytet: {{ item.priority }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% else %}
+                            <p class="task">Brak ukończonych wydarzeń do wyświetlenia.</p>
+                        {% endif %}
+                    {% else %}
+                        <p class="task">Aby zobaczyć wydarzenia, proszę zaloguj się na stronie głównej.</p>
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+    </section>
+</main>
+<div class="odstep"></div>
+<footer>
+    <p>© 2023 System Zarządzania Zadaniami</p>
+</footer>
+</body>
+</html>

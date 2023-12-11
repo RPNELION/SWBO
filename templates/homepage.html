@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>System Zarządzania Zadaniami</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header>
+    <h1>System Zarządzania Zadaniami</h1>
+    <div class="buttons">
+        <button class="dark-mode" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Dark Mode</button>
+        <button class="light-mode" onclick="toggleLightMode()"><i class="fas fa-sun"></i> Light Mode</button>
+        <button class="background-zero" onclick="clearBackground()"><i class="fas fa-eye-slash"></i> Wyłącz tło</button>
+        <button class="restore-background" onclick="restoreBackground()" style="display: none;"><i
+                class="fas fa-eye"></i> Przywróć tło
+        </button>
+    </div>
+    {% for message in messages %}
+        <div class="messages">
+            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>Powiadomienie: </strong> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</header>
+<nav>
+    <div class="menu">
+        <ul>
+            <li><a href="{% url 'homepage' %}"><i class="fas fa-home"></i> Strona główna</a></li>
+            <li><a href="{% url 'zadanie' %}"><i class="fas fa-tasks"></i> Panel wydarzeń</a>
+                <ul>
+                    <li><a href="{% url 'zadania_dodaj' %}"><i class="fas fa-plus"></i>  Dodaj zadania i projekty</a></li>
+                    <li><a href="{% url 'zadania_usun' %}"><i class="fas fa-trash"></i> Usuń wydarzenie</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'zadania_wyszukaj' %}"><i class="fas fa-check-square"></i> Zakończ zadanie lub projekt</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </li>
+            <li><a href="{% url 'baza' %}"><i class="far fa-calendar-alt"></i> Baza Wydarzeń</a></li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <section>
+        <div class="container">
+            <div class="left-column">
+                <section class="user">
+                    {% if user.is_authenticated %}
+                        <h2><i class="fas fa-pen"></i> Twoje Zadania i Projekty</h2>
+                        <ul class="task-list">
+                            <h3><i class="fas fa-tasks"></i> Zadania</h3>
+                            {% for task in tasks %}
+                                <li class="task">
+                                    <h4>{{ task.title }} - Ocena ważności: {{ task.priority }}</h4>
+                                    <p>Termin: {{ task.on_date }} </p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <ul class="task-list">
+                            <h3><i class="fas fa-project-diagram"></i> Projekty</h3>
+                            {% for project in projects %}
+                                <li class="task">
+                                    <h4>{{ project.title }} - Ocena ważności: {{ project.priority }}</h4>
+                                    <p>Początek: {{ project.start_date }}<br>Termin końcowy: {{ project.end_date }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <h2><i class="fas fa-pen"></i> Zadania i Projekty</h2>
+                        <p>Witaj! Aby skorzystać z serwisu musisz się zalogować.</p>
+                        <p>Jeśli nie masz konta, możesz je założyć.</p>
+                    {% endif %}
+                </section>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="right-column">
+                    <section class="user">
+                        <div class="panel-caly">
+                            <section class="right-column">
+                                <h2>Jesteś zalogowany!</h2>
+                                <h3>Profil {{ customer.user }}</h3>
+                                <h4>Imię: {{ customer.name }}</h4>
+                                <h4>Nazwisko: {{ customer.surname }}</h4>
+                                <h4>Email: {{ customer.email }}</h4>
+                            </section>
+                            <section class="left-column">
+                                <div class="gora-prawo">
+                                    <div class="buttons">
+                                        <form id="loginForm" action="/signout/" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit"><i class="fas fa-sign-out-alt"></i> Wyloguj</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="profilowe">
+                                    <img class="obrazek" src="{{ customer.profile_image_url }}" alt="Profile Picture">
+                                </div>
+                            </section>
+                        </div>
+                        <div class="funkcje-profilu">
+                            <div class="buttons">
+                                <button onclick="showAvatarChange()"><i class="far fa-image"></i> Dodaj zdjęcie
+                                    profilowe
+                                </button>
+                                <button onclick="showChangePassword()"><i class="fas fa-lock"></i> Zmień hasło</button>
+                                <button onclick="showPasswordConfirmation()"><i class="far fa-trash-alt"></i> Usuń konto
+                                </button>
+                                <section class="change-password-section hidden">
+                                    <h3>Zmień hasło</h3>
+                                    <form id="changePasswordForm" action="/change-password/" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="currentPassword">Aktualne hasło:</label>
+                                            <input type="password" id="currentPassword" name="currentPassword" required>
+                                            <label for="newPassword">Nowe hasło:</label>
+                                            <input type="password" id="newPassword" name="newPassword" required>
+                                            <label for="confirmNewPassword">Potwierdź nowe hasło:</label>
+                                            <input type="password" id="confirmNewPassword" name="confirmNewPassword"
+                                                   required>
+                                            <button type="submit"><i class="fas fa-key"></i> Zmień hasło</button>
+                                            <button type="button" onclick="cancelChangePassword()"><i
+                                                    class="fas fa-times-circle"></i> Anuluj
+                                            </button>
+                                        </div>
+                                    </form>
+                                </section>
+                                <section class="avatar hidden">
+                                    <h3>Wgraj własne zdjęcie profilowe</h3>
+                                    <form id="uploadAvatarForm" action="/upload-avatar/" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="avatarURL">Adres URL obrazu PNG:</label>
+                                            <input type="text" id="avatarURL" name="avatarURL" required>
+                                            <button type="submit"><i class="fas fa-cloud-upload-alt"></i> Wgraj zdjęcie
+                                            </button>
+                                            <button type="button" onclick="cancelAvatarChange()"><i
+                                                    class="fas fa-times-circle"></i> Anuluj
+                                            </button>
+                                        </div>
+                                    </form>
+                                </section>
+                                <section class="delete-account-section hidden">
+                                    <h3>Potwierdź usunięcie konta</h3>
+                                    <form id="deleteAccountForm" action="/delete-account/" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="confirmPassword">Potwierdź hasło:</label>
+                                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                                   required>
+                                            <button type="submit"><i class="fas fa-user-times"></i> Usuń konto</button>
+                                            <button type="button" onclick="cancelDelete()"><i
+                                                    class="fas fa-times-circle"></i> Anuluj
+                                            </button>
+                                        </div>
+                                    </form>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            {% else %}
+                <div class="right-column">
+                    <section class="user">
+                        <h3><i class="fas fa-cogs"></i> Panel Użytkownika</h3>
+                        <p>Witaj! Panel użytkownika jest dostępny jedynie dla zalogowanych. Poniżej znajduje się
+                            przycisk, który Ci to umożliwi.</p>
+                        <p>Aby skorzystać z serwisu musisz się zajerestrować.</p>
+                        <div class="buttons">
+                            <button onclick="showLogin()"><i class="fas fa-sign-in-alt"></i> Zaloguj</button>
+                            <button onclick="showRegister()"><i class="fas fa-user-plus"></i> Zarejestruj</button>
+                        </div>
+                    </section>
+                    <section class="LandRSection" id="loginSection">
+                        <h3><i class="fas fa-sign-in-alt"></i> Logowanie</h3>
+                        <form id="loginForm" action="/signin/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="loginUsername">Nazwa użytkownika:</label>
+                                <input type="text" id="loginUsername" name="loginUsername" required>
+                                <label for="loginPassword">Hasło:</label>
+                                <input type="password" id="loginPassword" name="loginPassword" required>
+                                <button type="submit"><i class="fas fa-sign-in-alt"></i> Zaloguj</button>
+                            </div>
+                        </form>
+                    </section>
+                    <section class="LandRSection" id="registerSection">
+                        <h3><i class="fas fa-user-plus"></i> Rejestracja</h3>
+                        <form id="registerForm" action="/signup/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="registerUsername">Nazwa użytkownika:</label>
+                                <input type="text" id="registerUsername" name="registerUsername" required>
+                                <label for="registerName">Imię:</label>
+                                <input type="text" id="registerName" name="registerName" required>
+                                <label for="registerSurname">Nazwisko:</label>
+                                <input type="text" id="registerSurname" name="registerSurname" required>
+                                <label for="registerEmail">Email:</label>
+                                <input type="email" id="registerEmail" name="registerEmail" required>
+                                <label for="registerPassword">Hasło:</label>
+                                <input type="password" id="registerPassword" name="registerPassword" required>
+                                <label for="confirmPassword">Potwierdź hasło:</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                                <button type="submit"><i class="fas fa-user-plus"></i> Zarejestruj</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</main>
+<div class="odstep"></div>
+<footer>
+    <p>© 2023 System Zarządzania Zadaniami</p>
+</footer>
+</body>
+</html>
